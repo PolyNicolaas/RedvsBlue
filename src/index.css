@@ -1,0 +1,398 @@
+@import "tailwindcss";
+
+@layer base {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: linear-gradient(
+            135deg,
+            #0f172a 0%,
+            #1e293b 50%,
+            #0f172a 100%
+        );
+        color: white;
+        min-height: 100vh;
+        overflow: hidden;
+        font-family:
+            -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+            "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+            sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    #root {
+        width: 100%;
+        height: 100vh;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(30, 41, 59, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Glass morphism effect */
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-strong {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Button styles */
+.btn-primary {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(to right, #9333ea, #3b82f6);
+    color: white;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    transition: all 0.2s;
+    box-shadow: 0 10px 15px -3px rgba(147, 51, 234, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(to right, #a855f7, #60a5fa);
+    transform: scale(0.98);
+}
+
+.btn-primary:active {
+    transform: scale(0.95);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary:disabled:hover {
+    transform: scale(1);
+}
+
+.btn-secondary {
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e5e7eb;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:active {
+    transform: scale(0.95);
+}
+
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Card styles */
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.card-elevated {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* Score badge */
+.score-badge {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    padding: 1rem;
+    min-width: 120px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.score-badge.active {
+    box-shadow:
+        0 0 0 2px transparent,
+        0 0 0 4px transparent;
+}
+
+.score-badge.active-red {
+    border-color: #ef4444;
+    box-shadow:
+        0 0 0 2px #1e293b,
+        0 0 0 4px #ef4444,
+        0 20px 40px -10px rgba(239, 68, 68, 0.5);
+}
+
+.score-badge.active-blue {
+    border-color: #3b82f6;
+    box-shadow:
+        0 0 0 2px #1e293b,
+        0 0 0 4px #3b82f6,
+        0 20px 40px -10px rgba(59, 130, 246, 0.5);
+}
+
+/* Select/Input styles */
+.input-select {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(20px);
+    border: 1px solid #475569;
+    border-radius: 0.5rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.input-select:focus {
+    outline: none;
+    border-color: #a855f7;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+}
+
+.input-range {
+    width: 100%;
+    height: 0.5rem;
+    border-radius: 0.5rem;
+    appearance: none;
+    cursor: pointer;
+    background: #475569;
+}
+
+.input-range::-webkit-slider-thumb {
+    appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background: linear-gradient(to right, #a855f7, #3b82f6);
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(168, 85, 247, 0.5);
+    transition: all 0.2s;
+}
+
+.input-range::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 15px -3px rgba(168, 85, 247, 0.7);
+}
+
+.input-range::-moz-range-thumb {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background: linear-gradient(to right, #a855f7, #3b82f6);
+    cursor: pointer;
+    border: 0;
+}
+
+/* Legend items */
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #d1d5db;
+}
+
+.legend-color {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+/* Pulse animation for active player */
+@keyframes glow {
+    0%,
+    100% {
+        box-shadow: 0 0 20px currentColor;
+    }
+    50% {
+        box-shadow:
+            0 0 40px currentColor,
+            0 0 60px currentColor;
+    }
+}
+
+.pulse-glow {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Details/Summary styling */
+details {
+    transition: all 0.3s;
+}
+
+details summary {
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s;
+    list-style: none;
+}
+
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+details summary::before {
+    content: "▶";
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: transform 0.2s;
+}
+
+details[open] summary::before {
+    transform: rotate(90deg);
+}
+
+details summary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    margin: -0.5rem -0.75rem;
+}
+
+/* Game status message */
+.status-message {
+    text-align: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 1.125rem;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.win-message {
+    background: linear-gradient(
+        to right,
+        rgba(147, 51, 234, 0.3),
+        rgba(219, 39, 119, 0.3)
+    );
+    border: 2px solid rgba(147, 51, 234, 0.5);
+    box-shadow: 0 20px 40px -10px rgba(147, 51, 234, 0.5);
+    animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-slow {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Canvas container */
+.canvas-container {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+}
+
+.canvas-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(139, 92, 246, 0.05),
+        transparent 70%
+    );
+}
+
+/* Text gradients */
+.text-gradient-purple {
+    background: linear-gradient(to right, #c084fc, #f472b6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-blue {
+    background: linear-gradient(to right, #60a5fa, #22d3ee);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-red {
+    background: linear-gradient(to right, #f87171, #fb923c);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Loading spinner animation */
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    animation: spinner 1s linear infinite;
+}

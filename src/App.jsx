@@ -1599,67 +1599,121 @@ export default function RedVsBlueSphere() {
   };
 
   return (
-    <div className="flex flex-col items-center p-4 min-h-screen bg-gray-900">
-      <div className="mb-4 text-center">
-        <h1 className="text-3xl font-bold text-white mb-1">Red vs Blue</h1>
-        <p className="text-gray-500 text-sm">Spherical Territory Game</p>
+    <div className="flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 min-h-screen w-full fade-in">
+      {/* Header */}
+      <div className="mb-6 text-center">
+        <h1 className="text-5xl sm:text-6xl font-black mb-2 text-gradient-purple drop-shadow-2xl">
+          Red vs Blue
+        </h1>
+        <p className="text-gray-400 text-sm sm:text-base font-medium tracking-wide">
+          ✨ Spherical Territory Strategy Game ✨
+        </p>
       </div>
 
-      <div className="w-full max-w-2xl">
-        {/* Score */}
-        <div className="flex items-center justify-between mb-4 px-2">
+      <div className="w-full max-w-4xl space-y-6">
+        {/* Score Board */}
+        <div className="flex items-center justify-between gap-4 px-2">
+          {/* Red Player */}
           <div
-            className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg ${currentPlayer === "red" && !gameOver ? "bg-red-900/50 ring-2 ring-red-500" : "bg-gray-800/50"}`}
+            className={`score-badge flex-1 max-w-[200px] transition-all duration-300 ${
+              currentPlayer === "red" && !gameOver ? "active active-red" : ""
+            }`}
           >
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded-full bg-red-500"></div>
-              <span className="text-2xl font-bold text-white">
-                {tileStates.filter((s) => s === "red").length}
-              </span>
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-red-600 shadow-lg shadow-red-500/50"></div>
+                <span className="text-3xl sm:text-4xl font-black text-white">
+                  {tileStates.filter((s) => s === "red").length}
+                </span>
+              </div>
+              <div className="text-center">
+                <div className="text-red-400 font-bold text-xs uppercase tracking-wider">
+                  Red Player
+                </div>
+                <div className="text-gray-400 text-xs mt-0.5">
+                  {redPlayer === "human"
+                    ? "👤 Human"
+                    : `🤖 ${AI_TYPES[redPlayer]?.name}`}
+                </div>
+              </div>
             </div>
-            <span className="text-xs text-gray-400">
-              {redPlayer === "human" ? "Human" : AI_TYPES[redPlayer]?.name}
-            </span>
           </div>
 
-          <div className="text-center">
+          {/* Status Message */}
+          <div className="flex-1 text-center px-4">
             {gameOver ? (
-              <div className="px-4 py-3 bg-purple-600 rounded-lg">
-                <div className="text-white font-bold text-lg">
-                  {winner === "red" ? "🔴 Red" : "🔵 Blue"} Wins!
+              <div className="win-message py-4 px-6">
+                <div className="text-2xl sm:text-3xl font-black mb-2">
+                  {winner === "red" ? "🔴" : "🔵"}
+                  <span
+                    className={
+                      winner === "red"
+                        ? "text-gradient-red"
+                        : "text-gradient-blue"
+                    }
+                  >
+                    {" "}
+                    {winner === "red" ? "Red" : "Blue"} Wins!
+                  </span>
                 </div>
-                <div className="text-purple-200 text-xs mt-1">
-                  in {turnCount} turns
+                <div className="text-purple-300 text-sm font-medium">
+                  Victory in {turnCount} turns
                 </div>
               </div>
             ) : (
-              <span className="text-gray-400 text-sm">{message}</span>
+              <div className="status-message">
+                <div className="text-base sm:text-lg font-semibold text-gray-200">
+                  {message}
+                </div>
+                {aiThinking && (
+                  <div className="flex items-center justify-center gap-2 mt-2">
+                    <div
+                      className="w-2 h-2 bg-purple-500 rounded-full animate-bounce"
+                      style={{ animationDelay: "0ms" }}
+                    ></div>
+                    <div
+                      className="w-2 h-2 bg-purple-500 rounded-full animate-bounce"
+                      style={{ animationDelay: "150ms" }}
+                    ></div>
+                    <div
+                      className="w-2 h-2 bg-purple-500 rounded-full animate-bounce"
+                      style={{ animationDelay: "300ms" }}
+                    ></div>
+                  </div>
+                )}
+              </div>
             )}
           </div>
 
+          {/* Blue Player */}
           <div
-            className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg ${currentPlayer === "blue" && !gameOver ? "bg-blue-900/50 ring-2 ring-blue-500" : "bg-gray-800/50"}`}
+            className={`score-badge flex-1 max-w-[200px] transition-all duration-300 ${
+              currentPlayer === "blue" && !gameOver ? "active active-blue" : ""
+            }`}
           >
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-white">
-                {tileStates.filter((s) => s === "blue").length}
-              </span>
-              <div className="w-5 h-5 rounded-full bg-blue-500"></div>
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl sm:text-4xl font-black text-white">
+                  {tileStates.filter((s) => s === "blue").length}
+                </span>
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/50"></div>
+              </div>
+              <div className="text-center">
+                <div className="text-blue-400 font-bold text-xs uppercase tracking-wider">
+                  Blue Player
+                </div>
+                <div className="text-gray-400 text-xs mt-0.5">
+                  {bluePlayer === "human"
+                    ? "👤 Human"
+                    : `🤖 ${AI_TYPES[bluePlayer]?.name}`}
+                </div>
+              </div>
             </div>
-            <span className="text-xs text-gray-400">
-              {bluePlayer === "human" ? "Human" : AI_TYPES[bluePlayer]?.name}
-            </span>
           </div>
         </div>
 
-        {/* Action buttons */}
-        <div className="flex justify-center gap-3 mb-4 min-h-[48px]">
-          {aiThinking && (
-            <div className="flex items-center gap-3 px-6 py-2 bg-gray-700 rounded-lg">
-              <div className="w-4 h-4 border-2 border-gray-400 border-t-white rounded-full animate-spin"></div>
-              <span className="text-gray-300">AI thinking...</span>
-            </div>
-          )}
+        {/* Action Buttons */}
+        <div className="flex justify-center gap-3 min-h-[56px] items-center">
           {selectedTile !== null && !gameOver && !aiThinking && (
             <button
               onClick={() => {
@@ -1668,117 +1722,184 @@ export default function RedVsBlueSphere() {
                   `${currentPlayer === "red" ? "Red" : "Blue"}'s turn`,
                 );
               }}
-              className="px-5 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600"
+              className="btn-secondary"
             >
-              ← Cancel
+              ← Cancel Selection
             </button>
           )}
           {gameOver && (
-            <button
-              onClick={applySettings}
-              className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-500 font-bold"
-            >
-              Play Again
+            <button onClick={applySettings} className="btn-primary">
+              🎮 Play Again
             </button>
           )}
         </div>
 
         {/* 3D Canvas */}
-        <div
-          ref={containerRef}
-          className="w-full bg-gray-800 rounded-xl overflow-hidden cursor-grab active:cursor-grabbing touch-none"
-          style={{ height: 480 }}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          onClick={handleClick}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        />
-
-        {/* Quick controls */}
-        <div className="flex items-center justify-between mt-3 px-1">
-          <div className="flex gap-2">
-            <button
-              onClick={() => setAutoRotate(!autoRotate)}
-              className={`px-3 py-1.5 rounded text-xs font-medium ${autoRotate ? "bg-cyan-600 text-white" : "bg-gray-700 text-gray-400 hover:bg-gray-600"}`}
-            >
-              {autoRotate ? "🎯 Auto-Focus" : "🎯 Manual"}
-            </button>
-            <button
-              onClick={() => setSoundEnabled(!soundEnabled)}
-              className={`px-3 py-1.5 rounded text-xs font-medium ${soundEnabled ? "bg-green-600 text-white" : "bg-gray-700 text-gray-400 hover:bg-gray-600"}`}
-            >
-              {soundEnabled ? "🔊 Sound" : "🔇 Muted"}
-            </button>
+        <div className="canvas-container relative group">
+          <div
+            ref={containerRef}
+            className="w-full touch-none cursor-grab active:cursor-grabbing"
+            style={{ height: 520 }}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onClick={handleClick}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          />
+          {/* Overlay hint */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 glass px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            <span className="text-gray-300 text-xs font-medium">
+              🖱️ Drag to rotate • Click tiles to play
+            </span>
           </div>
-          <span className="text-gray-500 text-xs hidden sm:inline">
-            Drag or ←↑↓→ to rotate
-          </span>
-          <span className="text-gray-500 text-xs">
-            Turn {turnCount + 1} • {exactElimination ? "Exact" : "Nearest"}
-          </span>
+        </div>
+
+        {/* Quick Controls & Info Bar */}
+        <div className="card-elevated">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setAutoRotate(!autoRotate)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  autoRotate
+                    ? "bg-cyan-600 text-white shadow-lg shadow-cyan-500/30 hover:bg-cyan-500"
+                    : "bg-slate-700 text-gray-300 hover:bg-slate-600"
+                }`}
+              >
+                {autoRotate ? "🎯 Auto-Focus: ON" : "🎯 Manual"}
+              </button>
+              <button
+                onClick={() => setSoundEnabled(!soundEnabled)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  soundEnabled
+                    ? "bg-green-600 text-white shadow-lg shadow-green-500/30 hover:bg-green-500"
+                    : "bg-slate-700 text-gray-300 hover:bg-slate-600"
+                }`}
+              >
+                {soundEnabled ? "🔊 Sound: ON" : "🔇 Muted"}
+              </button>
+            </div>
+
+            <div className="flex items-center gap-4 text-sm">
+              <span className="text-gray-400">
+                <span className="text-gray-500">Turn:</span>{" "}
+                <span className="font-bold text-white">{turnCount + 1}</span>
+              </span>
+              <span className="text-gray-400">
+                <span className="text-gray-500">Mode:</span>{" "}
+                <span className="font-bold text-purple-400">
+                  {exactElimination ? "Exact" : "Nearest"}
+                </span>
+              </span>
+              <span className="text-gray-400 hidden lg:inline">
+                <span className="text-gray-500">Tiles:</span>{" "}
+                <span className="font-bold text-white">
+                  {polyData?.faces?.length || 0}
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Legend */}
+        <div className="card">
+          <div className="flex flex-wrap gap-x-6 gap-y-3 justify-center">
+            <div className="legend-item">
+              <div className="legend-color bg-gradient-to-br from-red-500 to-red-600 shadow-red-500/50"></div>
+              <span>Red Tiles</span>
+            </div>
+            <div className="legend-item">
+              <div className="legend-color bg-gradient-to-br from-blue-500 to-blue-600 shadow-blue-500/50"></div>
+              <span>Blue Tiles</span>
+            </div>
+            <div className="legend-item">
+              <div className="legend-color bg-gray-300"></div>
+              <span>Empty</span>
+            </div>
+            <div className="legend-item">
+              <div className="legend-color bg-yellow-400 shadow-yellow-500/50"></div>
+              <span>Selected</span>
+            </div>
+            <div className="legend-item">
+              <div className="legend-color bg-green-500 shadow-green-500/50"></div>
+              <span>Valid Move</span>
+            </div>
+            <div className="legend-item">
+              <div className="legend-color bg-orange-500 shadow-orange-500/50"></div>
+              <span>Eliminate</span>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Settings Panel */}
-      <div className="mt-6 w-full max-w-2xl">
-        <details className="bg-gray-800/50 rounded-xl">
-          <summary className="px-4 py-3 cursor-pointer text-gray-400 hover:text-white text-sm font-medium">
+      <div className="mt-8 w-full max-w-4xl">
+        <details className="card-elevated">
+          <summary className="cursor-pointer text-gray-300 hover:text-white font-semibold text-lg flex items-center gap-2">
             ⚙️ Game Settings & Rules
           </summary>
-          <div className="px-4 pb-4 pt-2 border-t border-gray-700">
+          <div className="mt-6 pt-6 border-t border-white/10 space-y-6">
             {/* Player Selection */}
-            <div className="mb-4 grid grid-cols-2 gap-4">
-              <div>
-                <label className="text-red-400 text-sm block mb-2">
-                  🔴 Red Player:
-                </label>
-                <select
-                  value={redPlayer}
-                  onChange={(e) => setRedPlayer(e.target.value)}
-                  className="w-full px-3 py-1.5 bg-gray-700 text-white rounded text-sm border border-gray-600"
-                >
-                  <option value="human">Human</option>
-                  {Object.entries(AI_TYPES).map(([key, { name }]) => (
-                    <option key={key} value={key}>
-                      AI: {name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="text-blue-400 text-sm block mb-2">
-                  🔵 Blue Player:
-                </label>
-                <select
-                  value={bluePlayer}
-                  onChange={(e) => setBluePlayer(e.target.value)}
-                  className="w-full px-3 py-1.5 bg-gray-700 text-white rounded text-sm border border-gray-600"
-                >
-                  <option value="human">Human</option>
-                  {Object.entries(AI_TYPES).map(([key, { name }]) => (
-                    <option key={key} value={key}>
-                      AI: {name}
-                    </option>
-                  ))}
-                </select>
+            <div>
+              <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                👥 Players
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="glass-strong p-4 rounded-xl">
+                  <label className="text-red-400 text-sm font-bold block mb-3 flex items-center gap-2">
+                    🔴 Red Player
+                  </label>
+                  <select
+                    value={redPlayer}
+                    onChange={(e) => setRedPlayer(e.target.value)}
+                    className="input-select w-full"
+                  >
+                    <option value="human">👤 Human</option>
+                    {Object.entries(AI_TYPES).map(([key, { name }]) => (
+                      <option key={key} value={key}>
+                        🤖 AI: {name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="glass-strong p-4 rounded-xl">
+                  <label className="text-blue-400 text-sm font-bold block mb-3 flex items-center gap-2">
+                    🔵 Blue Player
+                  </label>
+                  <select
+                    value={bluePlayer}
+                    onChange={(e) => setBluePlayer(e.target.value)}
+                    className="input-select w-full"
+                  >
+                    <option value="human">👤 Human</option>
+                    {Object.entries(AI_TYPES).map(([key, { name }]) => (
+                      <option key={key} value={key}>
+                        🤖 AI: {name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
 
             {/* Sphere Type */}
-            <div className="mb-4">
-              <label className="text-gray-400 text-sm block mb-2">
-                Sphere Type:
-              </label>
+            <div>
+              <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                🌐 Sphere Type
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {Object.entries(SPHERE_TYPES).map(([key, { name }]) => (
                   <button
                     key={key}
                     onClick={() => setSphereType(key)}
-                    className={`px-3 py-1.5 rounded text-xs ${sphereType === key ? "bg-purple-600 text-white" : "bg-gray-700 text-gray-400 hover:bg-gray-600"}`}
+                    className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                      sphereType === key
+                        ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/30"
+                        : "glass text-gray-300 hover:bg-white/10"
+                    }`}
                   >
                     {name}
                   </button>
@@ -1787,113 +1908,141 @@ export default function RedVsBlueSphere() {
             </div>
 
             {/* Detail & Starting */}
-            <div className="flex flex-wrap items-center gap-4 mb-4">
+            <div className="glass-strong p-6 rounded-xl space-y-5">
+              <h3 className="text-white font-bold text-lg flex items-center gap-2">
+                🎮 Game Settings
+              </h3>
+
               {SPHERE_TYPES[sphereType]?.hasDetail && (
-                <div className="flex items-center gap-2">
-                  <label className="text-gray-400 text-sm">Detail:</label>
+                <div>
+                  <label className="text-gray-300 text-sm font-medium block mb-3">
+                    Detail Level:{" "}
+                    <span className="text-purple-400 font-bold">
+                      {subdivisions}
+                    </span>
+                  </label>
                   <input
                     type="range"
                     min="0"
                     max="3"
                     value={subdivisions}
                     onChange={(e) => setSubdivisions(parseInt(e.target.value))}
-                    className="w-16 accent-purple-500"
+                    className="input-range"
                   />
-                  <span className="text-white text-sm w-4">{subdivisions}</span>
+                  <div className="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>Low</span>
+                    <span>High</span>
+                  </div>
                 </div>
               )}
-              <div className="flex items-center gap-2">
-                <label className="text-gray-400 text-sm">Start:</label>
+
+              <div>
+                <label className="text-gray-300 text-sm font-medium block mb-3">
+                  Starting Tiles:{" "}
+                  <span className="text-purple-400 font-bold">
+                    {startingTiles}
+                  </span>
+                </label>
                 <input
                   type="range"
                   min="1"
                   max="8"
                   value={startingTiles}
                   onChange={(e) => setStartingTiles(parseInt(e.target.value))}
-                  className="w-16 accent-purple-500"
+                  className="input-range"
                 />
-                <span className="text-white text-sm w-4">{startingTiles}</span>
+                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                  <span>1</span>
+                  <span>8</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <label className="text-gray-400 text-sm">Eliminate:</label>
-                <button
-                  onClick={() => setExactElimination(true)}
-                  className={`px-2 py-1 rounded text-xs ${exactElimination ? "bg-orange-600 text-white" : "bg-gray-700 text-gray-400"}`}
-                >
-                  Exact
-                </button>
-                <button
-                  onClick={() => setExactElimination(false)}
-                  className={`px-2 py-1 rounded text-xs ${!exactElimination ? "bg-orange-600 text-white" : "bg-gray-700 text-gray-400"}`}
-                >
-                  Nearest
-                </button>
+
+              <div>
+                <label className="text-gray-300 text-sm font-medium block mb-3">
+                  Elimination Mode
+                </label>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setExactElimination(true)}
+                    className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      exactElimination
+                        ? "bg-orange-600 text-white shadow-lg shadow-orange-500/30"
+                        : "bg-slate-700 text-gray-300 hover:bg-slate-600"
+                    }`}
+                  >
+                    🎯 Exact
+                  </button>
+                  <button
+                    onClick={() => setExactElimination(false)}
+                    className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      !exactElimination
+                        ? "bg-orange-600 text-white shadow-lg shadow-orange-500/30"
+                        : "bg-slate-700 text-gray-300 hover:bg-slate-600"
+                    }`}
+                  >
+                    📍 Nearest
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* New Game */}
-            <div className="flex items-center gap-4 mb-4">
+            {/* New Game Button */}
+            <div className="flex justify-center pt-4">
               <button
                 onClick={applySettings}
-                className="px-4 py-1.5 bg-purple-600 text-white rounded hover:bg-purple-500 text-sm font-medium"
+                className="btn-primary w-full sm:w-auto"
               >
-                New Game
+                🎮 Start New Game
               </button>
-              <span className="text-gray-500 text-xs">
-                {polyData ? `${polyData.faces.length} tiles` : ""}
-              </span>
-            </div>
-
-            {/* Legend */}
-            <div className="flex flex-wrap gap-x-4 gap-y-1 mb-4 text-xs">
-              <span className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded bg-red-500"></span>
-                <span className="text-gray-400">Red</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded bg-blue-500"></span>
-                <span className="text-gray-400">Blue</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded bg-gray-300"></span>
-                <span className="text-gray-400">Empty</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded bg-yellow-400"></span>
-                <span className="text-gray-400">Selected</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded bg-green-500"></span>
-                <span className="text-gray-400">Move</span>
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded bg-orange-500"></span>
-                <span className="text-gray-400">Eliminate</span>
-              </span>
             </div>
 
             {/* Rules */}
-            <div className="text-xs text-gray-400 space-y-1">
-              <p>
-                <strong className="text-gray-300">Select:</strong> Click your
-                tile to see options (green = move, orange = eliminate)
-              </p>
-              <p>
-                <strong className="text-gray-300">Move:</strong> Move to an
-                adjacent empty tile. Captures adjacent enemy tiles!
-              </p>
-              <p>
-                <strong className="text-gray-300">Eliminate:</strong> Remove the
-                empty tile opposite your selected tile
-              </p>
-              <p>
-                <strong className="text-gray-300">Surround:</strong> Empty tiles
-                only touching your tiles become yours
-              </p>
-              <p>
-                <strong className="text-gray-300">Win:</strong> Opponent can't
-                move or eliminate = you win!
-              </p>
+            <div className="glass-strong p-6 rounded-xl space-y-4">
+              <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                📖 How to Play
+              </h3>
+              <div className="space-y-3 text-sm text-gray-300">
+                <div className="flex gap-3">
+                  <span className="text-purple-400 font-bold">1.</span>
+                  <div>
+                    <strong className="text-white">Select:</strong> Click one of
+                    your colored tiles to select it. Green highlights show valid
+                    moves, orange shows elimination targets.
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <span className="text-purple-400 font-bold">2.</span>
+                  <div>
+                    <strong className="text-white">Move:</strong> Move to an
+                    adjacent empty tile (green). This automatically captures all
+                    adjacent enemy tiles!
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <span className="text-purple-400 font-bold">3.</span>
+                  <div>
+                    <strong className="text-white">Eliminate:</strong> Remove
+                    the empty tile on the opposite side of the sphere (orange).
+                    Strategic for blocking opponent expansion!
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <span className="text-purple-400 font-bold">4.</span>
+                  <div>
+                    <strong className="text-white">Surround:</strong> Empty
+                    tiles that only touch your tiles automatically become yours
+                    at the end of your turn.
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <span className="text-purple-400 font-bold">5.</span>
+                  <div>
+                    <strong className="text-white">Win:</strong> Force your
+                    opponent into a position where they cannot move or eliminate
+                    any tiles!
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </details>
