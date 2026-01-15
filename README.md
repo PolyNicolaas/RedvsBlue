@@ -11,6 +11,8 @@ Red vs Blue is a tactical board game played on various 3D polyhedra (sphere appr
 - **Multiple Sphere Types**: Goldberg (Hexagonal), Triangular, Quad Sphere, Dodecahedron, and Octahedron
 - **AI Opponents**: Random, Greedy, Defensive, and Strategic AI with different play styles
 - **3D Visualization**: Fully interactive 3D sphere using Three.js
+- **Dynamic Scaling**: Sphere automatically scales to fit any window size or device
+- **Responsive Layout**: Optimized UI with sidebar and prominent sphere display
 - **Smooth Animations**: Color transitions, pulse effects, and particle systems
 - **Sound Effects**: Audio feedback for moves, captures, and eliminations
 - **Customizable Settings**: Adjust detail level, starting tiles, and elimination rules
@@ -76,6 +78,7 @@ npm run preview
 - **Touch**: Swipe on mobile devices to rotate
 - **Keyboard**: Use arrow keys or WASD to rotate
 - **Tile Selection**: Click on tiles to select and move
+- **Window Resize**: Sphere automatically scales to fit your window size
 
 ### Game Settings
 
@@ -99,9 +102,10 @@ npm run preview
 ## 🛠️ Technology Stack
 
 - **React** - UI framework
-- **Three.js** - 3D graphics rendering
+- **Three.js** - 3D graphics rendering with dynamic viewport scaling
 - **Vite** - Build tool and dev server
-- **Tailwind CSS** - Styling (via inline classes)
+- **Tailwind CSS** - Styling with responsive design
+- **ResizeObserver API** - Real-time container size monitoring
 
 ## 📁 Project Structure
 
@@ -141,6 +145,7 @@ RedvsBlue/
 - Make sure your browser supports WebGL
 - Try updating your graphics drivers
 - Test in a different browser (Chrome, Firefox, Safari recommended)
+- Try resizing your browser window - the sphere should scale automatically
 
 **Audio not working:**
 - Some browsers require user interaction before playing audio

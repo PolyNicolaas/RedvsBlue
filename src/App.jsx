@@ -894,14 +894,14 @@ export default function RedVsBlueSphere({ mode, onReturnToMenu }) {
 
     const container = containerRef.current;
     const width = container.clientWidth || 600;
-    const height = 480;
+    const height = container.clientHeight || 600;
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x1a1a2e);
     sceneRef.current = scene;
 
-    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
-    camera.position.z = 3;
+    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+    camera.position.z = 2.5;
     cameraRef.current = camera;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -933,7 +933,48 @@ export default function RedVsBlueSphere({ mode, onReturnToMenu }) {
       if (centroid) rotateToFace(centroid);
     }, 100);
 
+    // Handle resize with both window resize and container size observer
+    const handleResize = () => {
+      if (!containerRef.current || !cameraRef.current || !rendererRef.current)
+        return;
+
+      const width = containerRef.current.clientWidth;
+      const height = containerRef.current.clientHeight;
+
+      if (width > 0 && height > 0) {
+        const aspect = width / height;
+        cameraRef.current.aspect = aspect;
+
+        // Adjust FOV based on aspect ratio for optimal sphere fitting
+        // Wider screens use smaller FOV, narrower screens use larger FOV
+        const baseFOV = 50;
+        if (aspect < 1) {
+          // Portrait mode - increase FOV to fit sphere
+          cameraRef.current.fov = baseFOV * (1 + (1 - aspect) * 0.3);
+        } else {
+          // Landscape mode - use base or slightly reduced FOV
+          cameraRef.current.fov = baseFOV / Math.pow(aspect, 0.15);
+        }
+
+        cameraRef.current.updateProjectionMatrix();
+
+        rendererRef.current.setSize(width, height);
+      }
+    };
+
+    // Use ResizeObserver for container size changes
+    const resizeObserver = new ResizeObserver(() => {
+      handleResize();
+    });
+    resizeObserver.observe(container);
+
+    // Also listen to window resize as fallback
+    window.addEventListener("resize", handleResize);
+
     return () => {
+      window.removeEventListener("resize", handleResize);
+      resizeObserver.disconnect();
+
       if (animationIdRef.current) cancelAnimationFrame(animationIdRef.current);
       if (colorAnimationIdRef.current)
         cancelAnimationFrame(colorAnimationIdRef.current);

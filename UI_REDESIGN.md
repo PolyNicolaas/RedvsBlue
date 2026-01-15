@@ -188,6 +188,90 @@ The Red vs Blue game interface has been redesigned to prioritize the 3D sphere v
 - Better utilization of GPU space
 - Smoother interactions on larger screens
 
+### Dynamic Sphere Scaling
+- Sphere automatically scales to fit any window size
+- ResizeObserver monitors container size changes
+- Camera aspect ratio updates dynamically
+- FOV adjusts based on aspect ratio for optimal fitting
+
+## 🔄 Dynamic Sphere Scaling
+
+The sphere now automatically scales and adapts to fit the window perfectly, regardless of screen size or window dimensions.
+
+### Implementation Details
+
+#### 1. **Dynamic Container Height**
+- Changed from fixed `height: 480px` to dynamic `clientHeight`
+- Canvas container uses `h-full` to fill available space
+- Sphere scales proportionally to window size
+
+#### 2. **Window Resize Handling**
+```javascript
+const handleResize = () => {
+  const width = containerRef.current.clientWidth;
+  const height = containerRef.current.clientHeight;
+  
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+};
+```
+
+#### 3. **ResizeObserver Integration**
+- Monitors container size changes in real-time
+- More reliable than window resize events alone
+- Handles sidebar collapse, browser zoom, and dev tools
+
+#### 4. **Adaptive Field of View**
+- Base FOV: 50 degrees
+- **Portrait mode** (aspect < 1): FOV increases to fit sphere
+- **Landscape mode** (aspect > 1): FOV slightly decreases
+- Formula: Adjusts based on aspect ratio for optimal viewing
+
+#### 5. **Camera Position Optimization**
+- Changed from `z = 3` to `z = 2.5`
+- Changed from FOV 60° to FOV 50°
+- Results in larger, more prominent sphere
+- Better utilization of available screen space
+
+### Benefits
+
+#### For All Screen Sizes
+- ✅ **Mobile phones**: Sphere fits perfectly in portrait or landscape
+- ✅ **Tablets**: Optimal use of screen real estate
+- ✅ **Laptops**: Sphere scales with browser window
+- ✅ **Large monitors**: Takes full advantage of space
+- ✅ **Split screen**: Adapts when window is resized
+
+#### For User Experience
+- ✅ No wasted space around the sphere
+- ✅ Consistent viewing experience across devices
+- ✅ Smooth transitions during resize
+- ✅ No distortion or stretching
+- ✅ Always maintains sphere proportions
+
+#### Technical Advantages
+- ✅ Responds to window resize instantly
+- ✅ Handles browser zoom properly
+- ✅ Updates when dev tools open/close
+- ✅ Works with dynamic layouts (sidebar collapse)
+- ✅ Memory efficient (cleanup on unmount)
+
+### Code Changes
+
+**Three.js Setup (App.jsx)**
+- Line ~897: `const height = container.clientHeight || 600;`
+- Line ~903: `const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);`
+- Line ~904: `camera.position.z = 2.5;`
+- Line ~936-972: Added resize handler with ResizeObserver
+
+**Key Features**
+1. Uses `ResizeObserver` for container changes
+2. Listens to `window.resize` as fallback
+3. Calculates optimal FOV based on aspect ratio
+4. Updates camera projection matrix on resize
+5. Properly cleans up observers on unmount
+
 ## 🎯 Key Benefits
 
 ### For Players
