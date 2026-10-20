@@ -1,5 +1,7 @@
 # Red vs Blue - 3D Sphere Strategy Game
 
+### ▶️ [Play it now in your browser](https://polynicolaas.github.io/RedvsBlue/)
+
 A strategic turn-based game played on a 3D sphere where two players compete to control territory by moving tiles and capturing opponent pieces.
 
 ## 🎮 Game Overview
