@@ -31,7 +31,7 @@ You need to have **Node.js** and **npm** installed on your computer.
 
 1. **Navigate to the project directory:**
    ```bash
-   cd /Users/nicolaasvermeulen/Desktop/Repository/RedvsBlue
+   cd RedvsBlue
    ```
 
 2. **Install dependencies:**
@@ -47,6 +47,14 @@ npm run dev
 ```
 
 The game will open in your default browser at `http://localhost:5173` (or similar).
+
+### Play Online (GitHub Pages)
+
+The game is deployed automatically to GitHub Pages by `.github/workflows/deploy.yml` on every push to `main`:
+
+**https://polynicolaas.github.io/RedvsBlue/**
+
+One-time setup: in the repo go to **Settings → Pages → Build and deployment** and set **Source** to **GitHub Actions**.
 
 ### Building for Production
 
